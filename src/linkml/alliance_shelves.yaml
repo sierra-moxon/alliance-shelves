@@ -1,20 +1,23 @@
-id: https://w3id.org/my_org/my_datamodel
-name: my_datamodel
-title: My Datamodel
+id: https://w3id.org/my_org/alliance-shelves
+name: alliance-shelves
+title: Alliance Shelves
+
 description: |-
   Enter a detailed description of your project here
 default_curi_maps:
   - semweb_context
+
 imports:
   - linkml:types
+
 prefixes:
-  my_datamodel: https://w3id.org/my_org/my_datamodel
+  alliance-shelves: https://w3id.org/my_org/alliance-shelves
   linkml: https://w3id.org/linkml/
   biolink: https://w3id.org/biolink/
   schema: http://schema.org/
   PATO: http://purl.obolibrary.org/obo/PATO_
   famrel: http://example.org/famrel/
-default_prefix: my_datamodel
+default_prefix: alliance-shelves
 default_range: string
 see_also:
   - https://example.org/
@@ -22,23 +25,29 @@ see_also:
 
 classes:
 
-  Registry:
-    description: Top level data container
-    tree_root: true
-    attributes:
-      persons:
-        range: Person
-        inlined: true
-        inlined_as_list: true
-        multivalued: true
-      organizations:
-        range: Organization
-        inlined_as_list: true
-        inlined: true
-        multivalued: true
-    
+  Shelf:
+    is_a: Furniture
+    slots:
+      - height
+      - width
+      - number_of_shelves
+    exact_mappings:
+      - uline:XXX435
 
-  NamedThing:
+  KitchenTable:
+    is_a: Furniture
+
+
+  Couch:
+    is_a: Furniture
+    slot_usage:
+      color:
+        required: true
+        range: couch_color_enumeration
+
+
+  Furniture:
+    abstract: True
     description: >-
       A generic grouping for any identifiable entity
     slots:
@@ -46,138 +55,31 @@ classes:
       - name
       - description
       - image
+      - color
     close_mappings:
      - schema:Thing
 
-  Person:
-    is_a: NamedThing
-    description: >-
-      A person (alive, dead, undead, or fictional).
-    class_uri: schema:Person
-    mixins:
-      - HasAliases
-    slots:
-      - primary_email
-      - birth_date
-      - age_in_years
-      - current_address
-      - has_familial_relationships
-    slot_usage:
-      primary_email:
-        pattern: "^\\S+@[\\S+\\.]+\\S+"
-  
-  HasAliases:
-    description: >-
-      A mixin applied to any class that can have aliases/alternateNames
-    mixin: true
-    attributes:
-      aliases:
-        multivalued: true
-        exact_mappings:
-          - schema:alternateName
-
-
-  Organization:
-    description: >-
-      An organization such as a company or university
-    is_a: NamedThing
-    class_uri: schema:Organization
-    mixins:
-      - HasAliases
-    slots:
-      - mission_statement
-      - founding_date
-
-  Address:
-    class_uri: schema:PostalAddress
-    slots:
-      - street
-      - city
-      - postal_code
-
-
-  Relationship:
-    slots:
-      - started_at_time
-      - ended_at_time
-      - related_to
-      - type
-
-  FamilialRelationship:
-    is_a: Relationship
-    slot_usage:
-      type:
-        range: FamilialRelationshipType
-        required: true
-      related to:
-        range: Person
-        required: true
-
+enums:
+  couch_color_enumeration:
+    permissible_values:
+      black:
+        meaning: PATO:0000317
+      blue:
+      red:
 
 slots:
-  id:
-    identifier: true
-    slot_uri: schema:identifier
-  name:
-    slot_uri: schema:name
-  description:
-    slot_uri: schema:description
-  image:
-    slot_uri: schema:image
-  primary_email:
-    slot_uri: schema:email
-  birth_date:
-    slot_uri: schema:birthDate
-  employed_at:
-    range: Organization
-  is_current:
-    range: boolean
-  has_familial_relationships:
-    range: FamilialRelationship
-    multivalued: true
-    inlined_as_list: true
-  current_address:
-    description: >-
-      The address at which a person currently lives
-    range: Address
-  age_in_years:
-    range: integer
-    minimum_value: 0
-    maximum_value: 999
-  related_to:
-  type:
-  street:
-  city:
-  mission_statement:
-  founding_date:
-  postal_code:
+  color:
+    description: the color is really important. color is defined by the  pigment.
     range: string
-  started_at_time:
-    slot_uri: prov:startedAtTime
-    range: date
-  ended_at_time:
-    slot_uri: prov:endedAtTime
-    range: date
-
-    
-enums:
-  PersonStatus:
-    permissible_values:
-      ALIVE:
-        description: the person is living
-        meaning: PATO:0001421 
-      DEAD:
-        description: the person is deceased
-        meaning: PATO:0001422
-      UNKNOWN:
-        description: the vital status is not known
-        todos:
-          - map this to an ontology
-  FamilialRelationshipType:
-    permissible_values:
-      SIBLING_OF:
-        meaning: famrel:01
-      PARENT_OF:
-        meaning: famrel:02
-      CHILD_OF:
-        meaning: famrel:01
+  height:
+    range: integer
+  width:
+  number_of_shelves:
+  id:
+    description: a unique identifier for my class
+  name:
+    description: the name of the furniture
+  description:
+    description: a description about the type of furniture
+  image:
+    description: an image of my piece of furniture

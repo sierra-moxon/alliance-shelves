@@ -1,8 +1,8 @@
 # Auto generated from alliance_shelves.yaml by pythongen.py version: 0.9.0
-# Generation date: 2022-05-10T08:43:01
-# Schema: my_datamodel
+# Generation date: 2022-05-10T09:05:36
+# Schema: alliance-shelves
 #
-# id: https://w3id.org/my_org/my_datamodel
+# id: https://w3id.org/my_org/alliance-shelves
 # description: Enter a detailed description of your project here
 # license: https://creativecommons.org/publicdomain/zero/1.0/
 
@@ -22,8 +22,7 @@ from linkml_runtime.utils.formatutils import camelcase, underscore, sfx
 from linkml_runtime.utils.enumerations import EnumDefinitionImpl
 from rdflib import Namespace, URIRef
 from linkml_runtime.utils.curienamespace import CurieNamespace
-from linkml_runtime.linkml_model.types import Boolean, Date, Integer, String
-from linkml_runtime.utils.metamodelcore import Bool, XSDDate
+from linkml_runtime.linkml_model.types import Integer, String
 
 metamodel_version = "1.7.0"
 version = None
@@ -33,75 +32,42 @@ dataclasses._init_fn = dataclasses_init_fn_with_kwargs
 
 # Namespaces
 PATO = CurieNamespace('PATO', 'http://purl.obolibrary.org/obo/PATO_')
+ALLIANCE_SHELVES = CurieNamespace('alliance-shelves', 'https://w3id.org/my_org/alliance-shelves')
 BIOLINK = CurieNamespace('biolink', 'https://w3id.org/biolink/')
 FAMREL = CurieNamespace('famrel', 'http://example.org/famrel/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
-MY_DATAMODEL = CurieNamespace('my_datamodel', 'https://w3id.org/my_org/my_datamodel')
-PROV = CurieNamespace('prov', 'http://www.w3.org/ns/prov#')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
-DEFAULT_ = MY_DATAMODEL
+ULINE = CurieNamespace('uline', 'http://example.org/UNKNOWN/uline/')
+DEFAULT_ = ALLIANCE-SHELVES
 
 
 # Types
 
 # Class references
-class NamedThingId(extended_str):
-    pass
 
-
-class PersonId(NamedThingId):
-    pass
-
-
-class OrganizationId(NamedThingId):
-    pass
 
 
 @dataclass
-class Registry(YAMLRoot):
-    """
-    Top level data container
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = MY_DATAMODEL.Registry
-    class_class_curie: ClassVar[str] = "my_datamodel:Registry"
-    class_name: ClassVar[str] = "Registry"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.Registry
-
-    persons: Optional[Union[Dict[Union[str, PersonId], Union[dict, "Person"]], List[Union[dict, "Person"]]]] = empty_dict()
-    organizations: Optional[Union[Dict[Union[str, OrganizationId], Union[dict, "Organization"]], List[Union[dict, "Organization"]]]] = empty_dict()
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        self._normalize_inlined_as_list(slot_name="persons", slot_type=Person, key_name="id", keyed=True)
-
-        self._normalize_inlined_as_list(slot_name="organizations", slot_type=Organization, key_name="id", keyed=True)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class NamedThing(YAMLRoot):
+class Furniture(YAMLRoot):
     """
     A generic grouping for any identifiable entity
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = MY_DATAMODEL.NamedThing
-    class_class_curie: ClassVar[str] = "my_datamodel:NamedThing"
-    class_name: ClassVar[str] = "NamedThing"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.NamedThing
+    class_class_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.Furniture
+    class_class_curie: ClassVar[str] = "alliance-shelves:Furniture"
+    class_name: ClassVar[str] = "Furniture"
+    class_model_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.Furniture
 
-    id: Union[str, NamedThingId] = None
+    id: Optional[str] = None
     name: Optional[str] = None
     description: Optional[str] = None
     image: Optional[str] = None
+    color: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, NamedThingId):
-            self.id = NamedThingId(self.id)
+        if self.id is not None and not isinstance(self.id, str):
+            self.id = str(self.id)
 
         if self.name is not None and not isinstance(self.name, str):
             self.name = str(self.name)
@@ -112,309 +78,106 @@ class NamedThing(YAMLRoot):
         if self.image is not None and not isinstance(self.image, str):
             self.image = str(self.image)
 
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class Person(NamedThing):
-    """
-    A person (alive, dead, undead, or fictional).
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = SCHEMA.Person
-    class_class_curie: ClassVar[str] = "schema:Person"
-    class_name: ClassVar[str] = "Person"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.Person
-
-    id: Union[str, PersonId] = None
-    primary_email: Optional[str] = None
-    birth_date: Optional[str] = None
-    age_in_years: Optional[int] = None
-    current_address: Optional[Union[dict, "Address"]] = None
-    has_familial_relationships: Optional[Union[Union[dict, "FamilialRelationship"], List[Union[dict, "FamilialRelationship"]]]] = empty_list()
-    aliases: Optional[Union[str, List[str]]] = empty_list()
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, PersonId):
-            self.id = PersonId(self.id)
-
-        if self.primary_email is not None and not isinstance(self.primary_email, str):
-            self.primary_email = str(self.primary_email)
-
-        if self.birth_date is not None and not isinstance(self.birth_date, str):
-            self.birth_date = str(self.birth_date)
-
-        if self.age_in_years is not None and not isinstance(self.age_in_years, int):
-            self.age_in_years = int(self.age_in_years)
-
-        if self.current_address is not None and not isinstance(self.current_address, Address):
-            self.current_address = Address(**as_dict(self.current_address))
-
-        if not isinstance(self.has_familial_relationships, list):
-            self.has_familial_relationships = [self.has_familial_relationships] if self.has_familial_relationships is not None else []
-        self.has_familial_relationships = [v if isinstance(v, FamilialRelationship) else FamilialRelationship(**as_dict(v)) for v in self.has_familial_relationships]
-
-        if not isinstance(self.aliases, list):
-            self.aliases = [self.aliases] if self.aliases is not None else []
-        self.aliases = [v if isinstance(v, str) else str(v) for v in self.aliases]
+        if self.color is not None and not isinstance(self.color, str):
+            self.color = str(self.color)
 
         super().__post_init__(**kwargs)
 
 
 @dataclass
-class HasAliases(YAMLRoot):
-    """
-    A mixin applied to any class that can have aliases/alternateNames
-    """
+class Shelf(Furniture):
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = MY_DATAMODEL.HasAliases
-    class_class_curie: ClassVar[str] = "my_datamodel:HasAliases"
-    class_name: ClassVar[str] = "HasAliases"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.HasAliases
+    class_class_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.Shelf
+    class_class_curie: ClassVar[str] = "alliance-shelves:Shelf"
+    class_name: ClassVar[str] = "Shelf"
+    class_model_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.Shelf
 
-    aliases: Optional[Union[str, List[str]]] = empty_list()
+    height: Optional[int] = None
+    width: Optional[str] = None
+    number_of_shelves: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if not isinstance(self.aliases, list):
-            self.aliases = [self.aliases] if self.aliases is not None else []
-        self.aliases = [v if isinstance(v, str) else str(v) for v in self.aliases]
+        if self.height is not None and not isinstance(self.height, int):
+            self.height = int(self.height)
+
+        if self.width is not None and not isinstance(self.width, str):
+            self.width = str(self.width)
+
+        if self.number_of_shelves is not None and not isinstance(self.number_of_shelves, str):
+            self.number_of_shelves = str(self.number_of_shelves)
 
         super().__post_init__(**kwargs)
 
 
-@dataclass
-class Organization(NamedThing):
-    """
-    An organization such as a company or university
-    """
+class KitchenTable(Furniture):
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.Organization
-    class_class_curie: ClassVar[str] = "schema:Organization"
-    class_name: ClassVar[str] = "Organization"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.Organization
-
-    id: Union[str, OrganizationId] = None
-    mission_statement: Optional[str] = None
-    founding_date: Optional[str] = None
-    aliases: Optional[Union[str, List[str]]] = empty_list()
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, OrganizationId):
-            self.id = OrganizationId(self.id)
-
-        if self.mission_statement is not None and not isinstance(self.mission_statement, str):
-            self.mission_statement = str(self.mission_statement)
-
-        if self.founding_date is not None and not isinstance(self.founding_date, str):
-            self.founding_date = str(self.founding_date)
-
-        if not isinstance(self.aliases, list):
-            self.aliases = [self.aliases] if self.aliases is not None else []
-        self.aliases = [v if isinstance(v, str) else str(v) for v in self.aliases]
-
-        super().__post_init__(**kwargs)
+    class_class_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.KitchenTable
+    class_class_curie: ClassVar[str] = "alliance-shelves:KitchenTable"
+    class_name: ClassVar[str] = "KitchenTable"
+    class_model_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.KitchenTable
 
 
 @dataclass
-class Address(YAMLRoot):
+class Couch(Furniture):
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.PostalAddress
-    class_class_curie: ClassVar[str] = "schema:PostalAddress"
-    class_name: ClassVar[str] = "Address"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.Address
+    class_class_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.Couch
+    class_class_curie: ClassVar[str] = "alliance-shelves:Couch"
+    class_name: ClassVar[str] = "Couch"
+    class_model_uri: ClassVar[URIRef] = ALLIANCE-SHELVES.Couch
 
-    street: Optional[str] = None
-    city: Optional[str] = None
-    postal_code: Optional[str] = None
+    color: Union[str, "CouchColorEnumeration"] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self.street is not None and not isinstance(self.street, str):
-            self.street = str(self.street)
-
-        if self.city is not None and not isinstance(self.city, str):
-            self.city = str(self.city)
-
-        if self.postal_code is not None and not isinstance(self.postal_code, str):
-            self.postal_code = str(self.postal_code)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class Relationship(YAMLRoot):
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = MY_DATAMODEL.Relationship
-    class_class_curie: ClassVar[str] = "my_datamodel:Relationship"
-    class_name: ClassVar[str] = "Relationship"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.Relationship
-
-    started_at_time: Optional[Union[str, XSDDate]] = None
-    ended_at_time: Optional[Union[str, XSDDate]] = None
-    related_to: Optional[str] = None
-    type: Optional[str] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self.started_at_time is not None and not isinstance(self.started_at_time, XSDDate):
-            self.started_at_time = XSDDate(self.started_at_time)
-
-        if self.ended_at_time is not None and not isinstance(self.ended_at_time, XSDDate):
-            self.ended_at_time = XSDDate(self.ended_at_time)
-
-        if self.related_to is not None and not isinstance(self.related_to, str):
-            self.related_to = str(self.related_to)
-
-        if self.type is not None and not isinstance(self.type, str):
-            self.type = str(self.type)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class FamilialRelationship(Relationship):
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = MY_DATAMODEL.FamilialRelationship
-    class_class_curie: ClassVar[str] = "my_datamodel:FamilialRelationship"
-    class_name: ClassVar[str] = "FamilialRelationship"
-    class_model_uri: ClassVar[URIRef] = MY_DATAMODEL.FamilialRelationship
-
-    type: Union[str, "FamilialRelationshipType"] = None
-    related_to: Union[str, PersonId] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, FamilialRelationshipType):
-            self.type = FamilialRelationshipType(self.type)
-
-        if self._is_empty(self.related_to):
-            self.MissingRequiredField("related_to")
-        if not isinstance(self.related_to, PersonId):
-            self.related_to = PersonId(self.related_to)
+        if self._is_empty(self.color):
+            self.MissingRequiredField("color")
+        if not isinstance(self.color, CouchColorEnumeration):
+            self.color = CouchColorEnumeration(self.color)
 
         super().__post_init__(**kwargs)
 
 
 # Enumerations
-class PersonStatus(EnumDefinitionImpl):
+class CouchColorEnumeration(EnumDefinitionImpl):
 
-    ALIVE = PermissibleValue(text="ALIVE",
-                                 description="the person is living",
-                                 meaning=PATO["0001421"])
-    DEAD = PermissibleValue(text="DEAD",
-                               description="the person is deceased",
-                               meaning=PATO["0001422"])
-    UNKNOWN = PermissibleValue(text="UNKNOWN",
-                                     description="the vital status is not known")
+    black = PermissibleValue(text="black",
+                                 meaning=PATO["0000317"])
+    blue = PermissibleValue(text="blue")
+    red = PermissibleValue(text="red")
 
     _defn = EnumDefinition(
-        name="PersonStatus",
-    )
-
-class FamilialRelationshipType(EnumDefinitionImpl):
-
-    SIBLING_OF = PermissibleValue(text="SIBLING_OF",
-                                           meaning=FAMREL["01"])
-    PARENT_OF = PermissibleValue(text="PARENT_OF",
-                                         meaning=FAMREL["02"])
-    CHILD_OF = PermissibleValue(text="CHILD_OF",
-                                       meaning=FAMREL["01"])
-
-    _defn = EnumDefinition(
-        name="FamilialRelationshipType",
+        name="CouchColorEnumeration",
     )
 
 # Slots
 class slots:
     pass
 
-slots.id = Slot(uri=SCHEMA.identifier, name="id", curie=SCHEMA.curie('identifier'),
-                   model_uri=MY_DATAMODEL.id, domain=None, range=URIRef)
+slots.color = Slot(uri=ALLIANCE-SHELVES.color, name="color", curie=ALLIANCE-SHELVES.curie('color'),
+                   model_uri=ALLIANCE-SHELVES.color, domain=None, range=Optional[str])
 
-slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
-                   model_uri=MY_DATAMODEL.name, domain=None, range=Optional[str])
+slots.height = Slot(uri=ALLIANCE-SHELVES.height, name="height", curie=ALLIANCE-SHELVES.curie('height'),
+                   model_uri=ALLIANCE-SHELVES.height, domain=None, range=Optional[int])
 
-slots.description = Slot(uri=SCHEMA.description, name="description", curie=SCHEMA.curie('description'),
-                   model_uri=MY_DATAMODEL.description, domain=None, range=Optional[str])
+slots.width = Slot(uri=ALLIANCE-SHELVES.width, name="width", curie=ALLIANCE-SHELVES.curie('width'),
+                   model_uri=ALLIANCE-SHELVES.width, domain=None, range=Optional[str])
 
-slots.image = Slot(uri=SCHEMA.image, name="image", curie=SCHEMA.curie('image'),
-                   model_uri=MY_DATAMODEL.image, domain=None, range=Optional[str])
+slots.number_of_shelves = Slot(uri=ALLIANCE-SHELVES.number_of_shelves, name="number_of_shelves", curie=ALLIANCE-SHELVES.curie('number_of_shelves'),
+                   model_uri=ALLIANCE-SHELVES.number_of_shelves, domain=None, range=Optional[str])
 
-slots.primary_email = Slot(uri=SCHEMA.email, name="primary_email", curie=SCHEMA.curie('email'),
-                   model_uri=MY_DATAMODEL.primary_email, domain=None, range=Optional[str])
+slots.id = Slot(uri=ALLIANCE-SHELVES.id, name="id", curie=ALLIANCE-SHELVES.curie('id'),
+                   model_uri=ALLIANCE-SHELVES.id, domain=None, range=Optional[str])
 
-slots.birth_date = Slot(uri=SCHEMA.birthDate, name="birth_date", curie=SCHEMA.curie('birthDate'),
-                   model_uri=MY_DATAMODEL.birth_date, domain=None, range=Optional[str])
+slots.name = Slot(uri=ALLIANCE-SHELVES.name, name="name", curie=ALLIANCE-SHELVES.curie('name'),
+                   model_uri=ALLIANCE-SHELVES.name, domain=None, range=Optional[str])
 
-slots.employed_at = Slot(uri=MY_DATAMODEL.employed_at, name="employed_at", curie=MY_DATAMODEL.curie('employed_at'),
-                   model_uri=MY_DATAMODEL.employed_at, domain=None, range=Optional[Union[str, OrganizationId]])
+slots.description = Slot(uri=ALLIANCE-SHELVES.description, name="description", curie=ALLIANCE-SHELVES.curie('description'),
+                   model_uri=ALLIANCE-SHELVES.description, domain=None, range=Optional[str])
 
-slots.is_current = Slot(uri=MY_DATAMODEL.is_current, name="is_current", curie=MY_DATAMODEL.curie('is_current'),
-                   model_uri=MY_DATAMODEL.is_current, domain=None, range=Optional[Union[bool, Bool]])
+slots.image = Slot(uri=ALLIANCE-SHELVES.image, name="image", curie=ALLIANCE-SHELVES.curie('image'),
+                   model_uri=ALLIANCE-SHELVES.image, domain=None, range=Optional[str])
 
-slots.has_familial_relationships = Slot(uri=MY_DATAMODEL.has_familial_relationships, name="has_familial_relationships", curie=MY_DATAMODEL.curie('has_familial_relationships'),
-                   model_uri=MY_DATAMODEL.has_familial_relationships, domain=None, range=Optional[Union[Union[dict, FamilialRelationship], List[Union[dict, FamilialRelationship]]]])
-
-slots.current_address = Slot(uri=MY_DATAMODEL.current_address, name="current_address", curie=MY_DATAMODEL.curie('current_address'),
-                   model_uri=MY_DATAMODEL.current_address, domain=None, range=Optional[Union[dict, Address]])
-
-slots.age_in_years = Slot(uri=MY_DATAMODEL.age_in_years, name="age_in_years", curie=MY_DATAMODEL.curie('age_in_years'),
-                   model_uri=MY_DATAMODEL.age_in_years, domain=None, range=Optional[int])
-
-slots.related_to = Slot(uri=MY_DATAMODEL.related_to, name="related_to", curie=MY_DATAMODEL.curie('related_to'),
-                   model_uri=MY_DATAMODEL.related_to, domain=None, range=Optional[str])
-
-slots.type = Slot(uri=MY_DATAMODEL.type, name="type", curie=MY_DATAMODEL.curie('type'),
-                   model_uri=MY_DATAMODEL.type, domain=None, range=Optional[str])
-
-slots.street = Slot(uri=MY_DATAMODEL.street, name="street", curie=MY_DATAMODEL.curie('street'),
-                   model_uri=MY_DATAMODEL.street, domain=None, range=Optional[str])
-
-slots.city = Slot(uri=MY_DATAMODEL.city, name="city", curie=MY_DATAMODEL.curie('city'),
-                   model_uri=MY_DATAMODEL.city, domain=None, range=Optional[str])
-
-slots.mission_statement = Slot(uri=MY_DATAMODEL.mission_statement, name="mission_statement", curie=MY_DATAMODEL.curie('mission_statement'),
-                   model_uri=MY_DATAMODEL.mission_statement, domain=None, range=Optional[str])
-
-slots.founding_date = Slot(uri=MY_DATAMODEL.founding_date, name="founding_date", curie=MY_DATAMODEL.curie('founding_date'),
-                   model_uri=MY_DATAMODEL.founding_date, domain=None, range=Optional[str])
-
-slots.postal_code = Slot(uri=MY_DATAMODEL.postal_code, name="postal_code", curie=MY_DATAMODEL.curie('postal_code'),
-                   model_uri=MY_DATAMODEL.postal_code, domain=None, range=Optional[str])
-
-slots.started_at_time = Slot(uri=PROV.startedAtTime, name="started_at_time", curie=PROV.curie('startedAtTime'),
-                   model_uri=MY_DATAMODEL.started_at_time, domain=None, range=Optional[Union[str, XSDDate]])
-
-slots.ended_at_time = Slot(uri=PROV.endedAtTime, name="ended_at_time", curie=PROV.curie('endedAtTime'),
-                   model_uri=MY_DATAMODEL.ended_at_time, domain=None, range=Optional[Union[str, XSDDate]])
-
-slots.registry__persons = Slot(uri=MY_DATAMODEL.persons, name="registry__persons", curie=MY_DATAMODEL.curie('persons'),
-                   model_uri=MY_DATAMODEL.registry__persons, domain=None, range=Optional[Union[Dict[Union[str, PersonId], Union[dict, Person]], List[Union[dict, Person]]]])
-
-slots.registry__organizations = Slot(uri=MY_DATAMODEL.organizations, name="registry__organizations", curie=MY_DATAMODEL.curie('organizations'),
-                   model_uri=MY_DATAMODEL.registry__organizations, domain=None, range=Optional[Union[Dict[Union[str, OrganizationId], Union[dict, Organization]], List[Union[dict, Organization]]]])
-
-slots.hasAliases__aliases = Slot(uri=MY_DATAMODEL.aliases, name="hasAliases__aliases", curie=MY_DATAMODEL.curie('aliases'),
-                   model_uri=MY_DATAMODEL.hasAliases__aliases, domain=None, range=Optional[Union[str, List[str]]])
-
-slots.related_to = Slot(uri=MY_DATAMODEL.related_to, name="related to", curie=MY_DATAMODEL.curie('related_to'),
-                   model_uri=MY_DATAMODEL.related_to, domain=None, range=Union[str, PersonId])
-
-slots.Person_primary_email = Slot(uri=SCHEMA.email, name="Person_primary_email", curie=SCHEMA.curie('email'),
-                   model_uri=MY_DATAMODEL.Person_primary_email, domain=Person, range=Optional[str],
-                   pattern=re.compile(r'^\S+@[\S+\.]+\S+'))
-
-slots.FamilialRelationship_type = Slot(uri=MY_DATAMODEL.type, name="FamilialRelationship_type", curie=MY_DATAMODEL.curie('type'),
-                   model_uri=MY_DATAMODEL.FamilialRelationship_type, domain=FamilialRelationship, range=Union[str, "FamilialRelationshipType"])
-
-slots.FamilialRelationship_related_to = Slot(uri=MY_DATAMODEL.related_to, name="FamilialRelationship_related to", curie=MY_DATAMODEL.curie('related_to'),
-                   model_uri=MY_DATAMODEL.FamilialRelationship_related_to, domain=FamilialRelationship, range=Union[str, PersonId])
+slots.Couch_color = Slot(uri=ALLIANCE-SHELVES.color, name="Couch_color", curie=ALLIANCE-SHELVES.curie('color'),
+                   model_uri=ALLIANCE-SHELVES.Couch_color, domain=Couch, range=Union[str, "CouchColorEnumeration"])

@@ -1,166 +1,118 @@
-@prefix famrel: <http://example.org/famrel/> .
-@prefix my_datamodel: <https://w3id.org/my_org/my_datamodel> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix PATO: <http://purl.obolibrary.org/obo/PATO_> .
+@prefix alliance-shelves: <https://w3id.org/my_org/alliance-shelves> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix schema1: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-my_datamodel:HasAliases a sh:NodeShape ;
+alliance-shelves:Couch a sh:NodeShape ;
     sh:closed true ;
-    sh:description "A mixin applied to any class that can have aliases/alternateNames" ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:order 0 ;
-            sh:path my_datamodel:aliases ] ;
-    sh:targetClass my_datamodel:HasAliases .
+    sh:property [ sh:description "a unique identifier for my class" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path alliance-shelves:id ],
+        [ sh:description "a description about the type of furniture" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path alliance-shelves:description ],
+        [ sh:description "the name of the furniture" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path alliance-shelves:name ],
+        [ sh:description "the color is really important. color is defined by the  pigment." ;
+            sh:in ( PATO:0000317 "blue" "red" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 4 ;
+            sh:path alliance-shelves:color ],
+        [ sh:description "an image of my piece of furniture" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path alliance-shelves:image ] ;
+    sh:targetClass alliance-shelves:Couch .
 
-my_datamodel:NamedThing a sh:NodeShape ;
+alliance-shelves:Furniture a sh:NodeShape ;
     sh:closed true ;
     sh:description "A generic grouping for any identifiable entity" ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:maxCount 1 ;
+    sh:property [ sh:description "the name of the furniture" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path alliance-shelves:name ],
+        [ sh:description "a unique identifier for my class" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path alliance-shelves:id ],
+        [ sh:description "a description about the type of furniture" ;
+            sh:maxCount 1 ;
             sh:order 2 ;
-            sh:path schema1:description ],
-        [ sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema1:name ],
-        [ sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path schema1:identifier ],
-        [ sh:maxCount 1 ;
+            sh:path alliance-shelves:description ],
+        [ sh:description "an image of my piece of furniture" ;
+            sh:maxCount 1 ;
             sh:order 3 ;
-            sh:path schema1:image ] ;
-    sh:targetClass my_datamodel:NamedThing .
-
-my_datamodel:Registry a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "Top level data container" ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class schema1:Organization ;
-            sh:nodeKind sh:IRI ;
-            sh:order 1 ;
-            sh:path my_datamodel:organizations ],
-        [ sh:class schema1:Person ;
-            sh:nodeKind sh:IRI ;
-            sh:order 0 ;
-            sh:path my_datamodel:persons ] ;
-    sh:targetClass my_datamodel:Registry .
-
-my_datamodel:Relationship a sh:NodeShape ;
-    sh:closed true ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:maxCount 1 ;
-            sh:order 3 ;
-            sh:path my_datamodel:type ],
-        [ sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path prov:endedAtTime ],
-        [ sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path prov:startedAtTime ],
-        [ sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path my_datamodel:related_to ] ;
-    sh:targetClass my_datamodel:Relationship .
-
-schema1:Organization a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "An organization such as a company or university" ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:maxCount 1 ;
+            sh:path alliance-shelves:image ],
+        [ sh:description "the color is really important. color is defined by the  pigment." ;
+            sh:maxCount 1 ;
             sh:order 4 ;
-            sh:path schema1:name ],
+            sh:path alliance-shelves:color ] ;
+    sh:targetClass alliance-shelves:Furniture .
+
+alliance-shelves:KitchenTable a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "the color is really important. color is defined by the  pigment." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path alliance-shelves:color ],
+        [ sh:description "the name of the furniture" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path alliance-shelves:name ],
+        [ sh:description "an image of my piece of furniture" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path alliance-shelves:image ],
+        [ sh:description "a unique identifier for my class" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path alliance-shelves:id ],
+        [ sh:description "a description about the type of furniture" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path alliance-shelves:description ] ;
+    sh:targetClass alliance-shelves:KitchenTable .
+
+alliance-shelves:Shelf a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path alliance-shelves:height ],
         [ sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path alliance-shelves:width ],
+        [ sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path alliance-shelves:number_of_shelves ],
+        [ sh:description "a description about the type of furniture" ;
+            sh:maxCount 1 ;
             sh:order 5 ;
-            sh:path schema1:description ],
-        [ sh:maxCount 1 ;
-            sh:order 6 ;
-            sh:path schema1:image ],
-        [ sh:maxCount 1 ;
-            sh:order 3 ;
-            sh:path schema1:identifier ],
-        [ sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path my_datamodel:mission_statement ],
-        [ sh:order 2 ;
-            sh:path my_datamodel:aliases ],
-        [ sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path my_datamodel:founding_date ] ;
-    sh:targetClass schema1:Organization .
-
-schema1:Person a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "A person (alive, dead, undead, or fictional)." ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path schema1:email ;
-            sh:pattern "^\\S+@[\\S+\\.]+\\S+" ],
-        [ sh:class my_datamodel:FamilialRelationship ;
-            sh:nodeKind sh:BlankNode ;
+            sh:path alliance-shelves:description ],
+        [ sh:description "the name of the furniture" ;
+            sh:maxCount 1 ;
             sh:order 4 ;
-            sh:path my_datamodel:has_familial_relationships ],
-        [ sh:class schema1:PostalAddress ;
-            sh:description "The address at which a person currently lives" ;
+            sh:path alliance-shelves:name ],
+        [ sh:description "the color is really important. color is defined by the  pigment." ;
             sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNode ;
-            sh:order 3 ;
-            sh:path my_datamodel:current_address ],
-        [ sh:maxCount 1 ;
-            sh:order 9 ;
-            sh:path schema1:image ],
-        [ sh:maxCount 1 ;
-            sh:order 8 ;
-            sh:path schema1:description ],
-        [ sh:maxCount 1 ;
             sh:order 7 ;
-            sh:path schema1:name ],
-        [ sh:maxCount 1 ;
-            sh:order 6 ;
-            sh:path schema1:identifier ],
-        [ sh:order 5 ;
-            sh:path my_datamodel:aliases ],
-        [ sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema1:birthDate ],
-        [ sh:maxCount 1 ;
-            sh:maxInclusive 999 ;
-            sh:minInclusive 0 ;
-            sh:order 2 ;
-            sh:path my_datamodel:age_in_years ] ;
-    sh:targetClass schema1:Person .
-
-schema1:PostalAddress a sh:NodeShape ;
-    sh:closed true ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path my_datamodel:city ],
-        [ sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path my_datamodel:postal_code ],
-        [ sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path my_datamodel:street ] ;
-    sh:targetClass schema1:PostalAddress .
-
-my_datamodel:FamilialRelationship a sh:NodeShape ;
-    sh:closed true ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path prov:endedAtTime ],
-        [ sh:in ( famrel:01 famrel:02 famrel:01 ) ;
+            sh:path alliance-shelves:color ],
+        [ sh:description "a unique identifier for my class" ;
             sh:maxCount 1 ;
-            sh:minCount 1 ;
             sh:order 3 ;
-            sh:path my_datamodel:type ],
-        [ sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path my_datamodel:related_to ],
-        [ sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path prov:startedAtTime ] ;
-    sh:targetClass my_datamodel:FamilialRelationship .
+            sh:path alliance-shelves:id ],
+        [ sh:description "an image of my piece of furniture" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path alliance-shelves:image ] ;
+    sh:targetClass alliance-shelves:Shelf .
 

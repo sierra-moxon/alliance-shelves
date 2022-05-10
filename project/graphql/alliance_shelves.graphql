@@ -1,68 +1,39 @@
-type Address
+type Couch
   {
-    street: String
-    city: String
-    postalCode: String
-  }
-
-type FamilialRelationship
-  {
-    startedAtTime: Date
-    endedAtTime: Date
-    relatedTo: String
-    type: FamilialRelationshipType!
-    relatedTo: Person!
-  }
-
-interface HasAliases
-  {
-    aliases: [String]
-  }
-
-type NamedThing
-  {
-    id: String!
+    id: String
     name: String
     description: String
     image: String
+    color: CouchColorEnumeration!
   }
 
-type Organization implements HasAliases
+interface Furniture
   {
-    id: String!
+    id: String
     name: String
     description: String
     image: String
-    missionStatement: String
-    foundingDate: String
-    aliases: [String]
+    color: String
   }
 
-type Person implements HasAliases
+type KitchenTable
   {
-    id: String!
+    id: String
     name: String
     description: String
     image: String
-    primaryEmail: String
-    birthDate: String
-    ageInYears: Integer
-    currentAddress: Address
-    hasFamilialRelationships: [FamilialRelationship]
-    aliases: [String]
+    color: String
   }
 
-type Registry
+type Shelf
   {
-    persons: [Person]
-    organizations: [Organization]
-  }
-
-type Relationship
-  {
-    startedAtTime: Date
-    endedAtTime: Date
-    relatedTo: String
-    type: String
+    id: String
+    name: String
+    description: String
+    image: String
+    color: String
+    height: Integer
+    width: String
+    numberOfShelves: String
   }
 

@@ -1,243 +1,121 @@
 {
    "$defs": {
-      "Address": {
+      "Couch": {
          "additionalProperties": false,
          "description": "",
          "properties": {
-            "city": {
+            "color": {
+               "$ref": "#/$defs/CouchColorEnumeration",
+               "description": "the color is really important. color is defined by the  pigment."
+            },
+            "description": {
+               "description": "a description about the type of furniture",
                "type": "string"
             },
-            "postal_code": {
+            "id": {
+               "description": "a unique identifier for my class",
                "type": "string"
             },
-            "street": {
+            "image": {
+               "description": "an image of my piece of furniture",
+               "type": "string"
+            },
+            "name": {
+               "description": "the name of the furniture",
+               "type": "string"
+            }
+         },
+         "required": [
+            "color"
+         ],
+         "title": "Couch",
+         "type": "object"
+      },
+      "CouchColorEnumeration": {
+         "description": "",
+         "enum": [
+            "black",
+            "blue",
+            "red"
+         ],
+         "title": "CouchColorEnumeration",
+         "type": "string"
+      },
+      "KitchenTable": {
+         "additionalProperties": false,
+         "description": "",
+         "properties": {
+            "color": {
+               "description": "the color is really important. color is defined by the  pigment.",
+               "type": "string"
+            },
+            "description": {
+               "description": "a description about the type of furniture",
+               "type": "string"
+            },
+            "id": {
+               "description": "a unique identifier for my class",
+               "type": "string"
+            },
+            "image": {
+               "description": "an image of my piece of furniture",
+               "type": "string"
+            },
+            "name": {
+               "description": "the name of the furniture",
                "type": "string"
             }
          },
          "required": [],
-         "title": "Address",
+         "title": "KitchenTable",
          "type": "object"
       },
-      "FamilialRelationship": {
+      "Shelf": {
          "additionalProperties": false,
          "description": "",
          "properties": {
-            "ended_at_time": {
-               "format": "date",
+            "color": {
+               "description": "the color is really important. color is defined by the  pigment.",
                "type": "string"
-            },
-            "related_to": {
-               "type": "string"
-            },
-            "started_at_time": {
-               "format": "date",
-               "type": "string"
-            },
-            "type": {
-               "$ref": "#/$defs/FamilialRelationshipType"
-            }
-         },
-         "required": [
-            "type",
-            "related_to"
-         ],
-         "title": "FamilialRelationship",
-         "type": "object"
-      },
-      "FamilialRelationshipType": {
-         "description": "",
-         "enum": [
-            "SIBLING_OF",
-            "PARENT_OF",
-            "CHILD_OF"
-         ],
-         "title": "FamilialRelationshipType",
-         "type": "string"
-      },
-      "NamedThing": {
-         "additionalProperties": false,
-         "description": "A generic grouping for any identifiable entity",
-         "properties": {
-            "description": {
-               "type": "string"
-            },
-            "id": {
-               "type": "string"
-            },
-            "image": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            }
-         },
-         "required": [
-            "id"
-         ],
-         "title": "NamedThing",
-         "type": "object"
-      },
-      "Organization": {
-         "additionalProperties": false,
-         "description": "An organization such as a company or university",
-         "properties": {
-            "aliases": {
-               "items": {
-                  "type": "string"
-               },
-               "type": "array"
             },
             "description": {
+               "description": "a description about the type of furniture",
                "type": "string"
             },
-            "founding_date": {
-               "type": "string"
-            },
-            "id": {
-               "type": "string"
-            },
-            "image": {
-               "type": "string"
-            },
-            "mission_statement": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            }
-         },
-         "required": [
-            "id"
-         ],
-         "title": "Organization",
-         "type": "object"
-      },
-      "Person": {
-         "additionalProperties": false,
-         "description": "A person (alive, dead, undead, or fictional).",
-         "properties": {
-            "age_in_years": {
-               "maximum": 999,
-               "minimum": 0,
+            "height": {
                "type": "integer"
             },
-            "aliases": {
-               "items": {
-                  "type": "string"
-               },
-               "type": "array"
-            },
-            "birth_date": {
-               "type": "string"
-            },
-            "current_address": {
-               "$ref": "#/$defs/Address",
-               "description": "The address at which a person currently lives"
-            },
-            "description": {
-               "type": "string"
-            },
-            "has_familial_relationships": {
-               "items": {
-                  "$ref": "#/$defs/FamilialRelationship"
-               },
-               "type": "array"
-            },
             "id": {
+               "description": "a unique identifier for my class",
                "type": "string"
             },
             "image": {
+               "description": "an image of my piece of furniture",
                "type": "string"
             },
             "name": {
+               "description": "the name of the furniture",
                "type": "string"
             },
-            "primary_email": {
-               "pattern": "^\\S+@[\\S+\\.]+\\S+",
-               "type": "string"
-            }
-         },
-         "required": [
-            "id"
-         ],
-         "title": "Person",
-         "type": "object"
-      },
-      "PersonStatus": {
-         "description": "",
-         "enum": [
-            "ALIVE",
-            "DEAD",
-            "UNKNOWN"
-         ],
-         "title": "PersonStatus",
-         "type": "string"
-      },
-      "Registry": {
-         "additionalProperties": false,
-         "description": "Top level data container",
-         "properties": {
-            "organizations": {
-               "items": {
-                  "$ref": "#/$defs/Organization"
-               },
-               "type": "array"
-            },
-            "persons": {
-               "items": {
-                  "$ref": "#/$defs/Person"
-               },
-               "type": "array"
-            }
-         },
-         "required": [],
-         "title": "Registry",
-         "type": "object"
-      },
-      "Relationship": {
-         "additionalProperties": false,
-         "description": "",
-         "properties": {
-            "ended_at_time": {
-               "format": "date",
+            "number_of_shelves": {
                "type": "string"
             },
-            "related_to": {
-               "type": "string"
-            },
-            "started_at_time": {
-               "format": "date",
-               "type": "string"
-            },
-            "type": {
+            "width": {
                "type": "string"
             }
          },
          "required": [],
-         "title": "Relationship",
+         "title": "Shelf",
          "type": "object"
       }
    },
-   "$id": "https://w3id.org/my_org/my_datamodel",
+   "$id": "https://w3id.org/my_org/alliance-shelves",
    "$schema": "http://json-schema.org/draft-07/schema#",
    "additionalProperties": true,
    "metamodel_version": "1.7.0",
-   "properties": {
-      "organizations": {
-         "items": {
-            "$ref": "#/$defs/Organization"
-         },
-         "type": "array"
-      },
-      "persons": {
-         "items": {
-            "$ref": "#/$defs/Person"
-         },
-         "type": "array"
-      }
-   },
+   "properties": {},
    "required": [],
-   "title": "my_datamodel",
+   "title": "alliance-shelves",
    "type": "object",
    "version": null
 }
